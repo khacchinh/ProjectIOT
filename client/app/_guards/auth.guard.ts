@@ -2,7 +2,7 @@
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route } from '@angular/router';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanLoad {
 
     constructor(private router: Router) { }
 
@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     }
 
     canLoad(route: Route): boolean {
-        if (localStorage.getItem('currentAdmin')) {
+        if (localStorage.getItem('currentUser')) {
             // logged in so return true
             return true;
         }

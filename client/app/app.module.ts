@@ -4,20 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app.routing';
 import { AppConfig } from './app.config';
 
 import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService } from './_services/index';
 import { LoginComponent } from './login/index';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BaseRequestOptions } from '@angular/http';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        routing
+        AppRoutingModule
     ],
     declarations: [
         AppComponent,
@@ -28,8 +30,8 @@ import { LoginComponent } from './login/index';
         AppConfig,
         AuthGuard,
         AlertService,
-        AuthenticationService,
-        UserService
+        UserService,
+        AuthenticationService
     ],
     bootstrap: [AppComponent]
 })
