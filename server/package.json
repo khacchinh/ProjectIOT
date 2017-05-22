@@ -4,7 +4,7 @@
     "description": "Apply IT to manager IOT in vegetable",
     "repository": {
         "type": "git",
-        "url": "https://github.com/cornflourblue/mean-angular2-registration-login-example.git"
+        "url": "https://github.com/khacchinh/ProjectIOT/tree/master/client"
     },
     "dependencies": {
         "bcryptjs": "^2.1.0",

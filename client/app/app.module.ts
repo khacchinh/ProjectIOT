@@ -10,9 +10,7 @@ import { AppConfig } from './app.config';
 import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, UserService } from './_services/index';
-import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
-import { RegisterComponent } from './register/index';
 
 @NgModule({
     imports: [
@@ -24,9 +22,7 @@ import { RegisterComponent } from './register/index';
     declarations: [
         AppComponent,
         AlertComponent,
-        HomeComponent,
         LoginComponent,
-        RegisterComponent
     ],
     providers: [
         AppConfig,

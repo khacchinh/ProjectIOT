@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route } from '@angular/router';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -14,6 +14,15 @@ export class AuthGuard implements CanActivate {
 
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+        return false;
+    }
+
+    canLoad(route: Route): boolean {
+        if (localStorage.getItem('currentAdmin')) {
+            // logged in so return true
+            return true;
+        }
+        this.router.navigate(['/login']);
         return false;
     }
 }
