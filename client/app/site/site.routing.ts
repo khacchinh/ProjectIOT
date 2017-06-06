@@ -2,9 +2,11 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SiteComponent } from './site.component';
-import { HomeComponent } from './home/home.component';
+import { UserComponent, RegisterComponent, UserEditComponent } from './users/index';
+import { HomeComponent } from './home/index';
+import { ServerDetailComponent } from './server-detail/index';
 
-import { RegisterComponent } from './register/register.component';
+//import { RegisterComponent } from './register/register.component';
 import { AuthGuard }       from '../_guards/index';
 
 const siteRoutes: Routes = [
@@ -14,7 +16,11 @@ const siteRoutes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: HomeComponent },
-      { path: 'register', component: RegisterComponent }
+      //{ path: 'register', component: RegisterComponent },
+      { path: 'users', component: UserComponent },
+      { path: 'user/:id', component: UserEditComponent},
+      { path: 'user-add', component: RegisterComponent},
+      { path: 'server-detail/:server', component: ServerDetailComponent},
     ]
   }
 ];
