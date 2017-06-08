@@ -43,8 +43,8 @@
                     <li>
                         <a [routerLink] = "['./users']"><i class="fa fa-desktop"></i> Manager User</a>
                     </li>
-                    <li>
-                        <a [routerLink] = "['./server-detail']"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+                    <li *ngFor = "let item of servers">
+                        <a [routerLink] = "['./server-detail', item.server]"><i class="fa fa-fw fa-file"></i> Server: {{item.server}}</a>
                     </li>
                 </ul>
 

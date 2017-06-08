@@ -26,7 +26,9 @@
 
             // other libraries
             'rxjs': 'npm:rxjs',
-            "socket.io-client": "node_modules/socket.io-client/dist/socket.io.js"
+            "socket.io-client": "node_modules/socket.io-client/dist/socket.io.js",
+            'angular2-highcharts': 'node_modules/angular2-highcharts',
+            'highcharts': 'node_modules/highcharts'
 
         },
         // packages tells the System loader how to load when no filename and/or no extension
@@ -41,6 +43,14 @@
             "socket.io-client": 
             {   
                 defaultExtension: "js"
+            },
+            highcharts: {
+                main: './highcharts.js',
+                defaultExtension: 'js'
+            },
+            'angular2-highcharts': {
+                main: './index.js',
+                defaultExtension: 'js'
             }
         }
     });

@@ -4,10 +4,11 @@ var router = express.Router();
 var climateServices = require('services/climate.service');
 
 // routes
-router.get('/server_name/:_server', getAll);
+router.get('/server_name/:server', getAll);
 router.get('/current/:_id', getCurrent);
-router.put('/:_id', update);
-//router.delete('/:_id', _delete);
+router.get('/servers', getAllServerName);
+router.get('/push/:_data', update);
+router.get('/data_charts/:server', getDataClimateChart);
 
 module.exports = router;
 
@@ -38,7 +39,13 @@ function getCurrent(req, res) {
 }
 
 function update(req, res) {
-    climateServices.update(req.params._id, req.body)
+    var data = req.params._data;
+    var arr_data = data.split("-");
+    var climateData = {
+        "key" : arr_data[1],
+        "value" : (!isNaN(arr_data[2])) ? parseFloat(arr_data[2]) : arr_data[2]
+    }
+    climateServices.update(arr_data[0], climateData)
         .then(function () {
             res.sendStatus(200);
         })
@@ -47,40 +54,22 @@ function update(req, res) {
         });
 }
 
-/*
-function _delete(req, res) {
-    climateServices.delete(req.params._id)
-        .then(function () {
-            res.sendStatus(200);
+function getAllServerName(req, res){
+    climateServices.getAllServerName()
+        .then(function(climates){
+            res.send(climates)
         })
-        .catch(function (err) {
+        .catch(function(err){
             res.status(400).send(err);
         });
 }
 
-function authenticate(req, res) {
-    climateServices.authenticate(req.body.username, req.body.password)
-        .then(function (user) {
-            if (user) {
-                // authentication successful
-                res.send(user);
-            } else {
-                // authentication failed
-                res.status(401).send('Username or password is incorrect');
-            }
+function getDataClimateChart(req, res){
+    climateServices.getDataClimateChart(req.params.server)
+        .then(function(datas){
+            res.send(datas)
         })
-        .catch(function (err) {
+        .catch(function(err){
             res.status(400).send(err);
         });
 }
-
-function register(req, res) {
-    climateServices.create(req.body)
-        .then(function () {
-            res.sendStatus(200);
-        })
-        .catch(function (err) {
-            res.status(400).send(err);
-        });
-}
-*/

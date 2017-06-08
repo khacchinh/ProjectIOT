@@ -1,19 +1,24 @@
 ﻿import { Component, OnInit, ElementRef } from '@angular/core';
 
 import { User } from '../../_models/index';
-import { UserService } from '../../_services/index';
+import { UserService, ClimateService } from '../../_services/index';
 
 @Component({
     moduleId: module.id,
     selector: "app-header",
-    templateUrl: 'header.component.html'
+    templateUrl: 'header.component.html',
+    styleUrls: ['./header.component.css'] 
+    
 })
 
 export class HeaderComponent implements OnInit {
-    constructor(private elementRef:ElementRef){}
+    private servers : any[];
+    constructor(private elementRef:ElementRef, private climateService:ClimateService){}
 
     ngOnInit() {
-        
+        this.climateService.getAllServerName().subscribe((servers) => {
+            this.servers = servers;
+        });
     }
 
     ngAfterViewInit(){

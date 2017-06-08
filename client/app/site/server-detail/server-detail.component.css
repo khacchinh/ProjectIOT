@@ -1,0 +1,12 @@
+.row.title_text {
+    text-align: center;
+}
+
+.row.title_text span{
+    font-size: 32px;
+    font-weight: 500;
+}
+
+chart{
+    display: block;
+}

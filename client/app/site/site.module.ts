@@ -1,9 +1,10 @@
 import { NgModule }       from '@angular/core';
 import { FormsModule }    from '@angular/forms';
 import { CommonModule }   from '@angular/common';
+import { ChartModule } from 'angular2-highcharts';
 
 
-import { AlertService, AuthenticationService, UserService, ClimateService} from '../_services/index';
+import { AlertService, AuthenticationService, UserService, ClimateService, IrrigationService} from '../_services/index';
 
 import { SiteComponent } from './site.component';
 //import { RegisterComponent } from './register/index';
@@ -24,7 +25,8 @@ import { UserComponent, RegisterComponent, UserEditComponent } from './users/ind
   imports: [
     CommonModule,
     FormsModule,
-    SiteRoutingModule
+    SiteRoutingModule,
+    ChartModule.forRoot(require('highcharts'))
   ],
   declarations: [
     SiteComponent,
@@ -42,7 +44,8 @@ import { UserComponent, RegisterComponent, UserEditComponent } from './users/ind
     AlertService,
     AuthenticationService,
     UserService,
-    ClimateService
+    ClimateService,
+    IrrigationService
   ]
 })
 export class SiteModule {}

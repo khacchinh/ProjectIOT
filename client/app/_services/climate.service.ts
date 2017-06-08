@@ -8,12 +8,20 @@ import { Climate } from '../_models/index';
 export class ClimateService {
     constructor(private http: Http, private config: AppConfig) { }
 
-    getAll(_server: string) {
-        return this.http.get(this.config.apiUrl + '/climates/server_name/' + _server, this.jwt()).map((response: Response) => response.json());
+    getAll(server: string) {
+        return this.http.get(this.config.apiUrl + '/climates/server_name/' + server, this.jwt()).map((response: Response) => response.json());
     }
 
     getById(_id: string) {
         return this.http.get(this.config.apiUrl + '/climates/current/' + _id, this.jwt()).map((response: Response) => response.json());
+    }
+
+    getAllServerName(){
+        return this.http.get(this.config.apiUrl + '/climates/servers', this.jwt()).map((response: Response) => response.json());
+    }
+
+    getDataClimateChart(server: string) {
+        return this.http.get(this.config.apiUrl + '/climates/data_charts/' + server, this.jwt()).map((response: Response) => response.json());
     }
 
     // private helper methods

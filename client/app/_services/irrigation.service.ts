@@ -8,12 +8,16 @@ import { Irrigation } from '../_models/index';
 export class IrrigationService {
     constructor(private http: Http, private config: AppConfig) { }
 
-    getAll(_server: string) {
-        return this.http.get(this.config.apiUrl + '/irrigations/server_name/' + _server, this.jwt()).map((response: Response) => response.json());
+    getAll(server: string) {
+        return this.http.get(this.config.apiUrl + '/irrigations/server_name/' + server, this.jwt()).map((response: Response) => response.json());
     }
 
     getById(_id: string) {
         return this.http.get(this.config.apiUrl + '/irrigations/current/' + _id, this.jwt()).map((response: Response) => response.json());
+    }
+
+    getDataIrrigatioChart(server: string) {
+        return this.http.get(this.config.apiUrl + '/irrigations/data_charts/' + server, this.jwt()).map((response: Response) => response.json());
     }
 
     // private helper methods

@@ -12,7 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // use JWT auth to secure the api
-app.use(expressJwt({ secret: config.secret }).unless({ path: ['/users/authenticate', '/users/register', '/climates', '/'] }));
+app.use(expressJwt({ secret: config.secret }).unless({ path: ['/users/authenticate', '/users/register', /^\/climates\/push\/.*/, /^\/irrigations\/push\/.*/] }));
+//, /^\/climates\/server_name\/.*/ get unless params
 
 // routes
 app.use('/users', require('./controllers/users.controller'));

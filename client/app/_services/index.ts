@@ -2,3 +2,4 @@
 export * from './authentication.service';
 export * from './user.service';
 export * from './climate.service';
+export * from './irrigation.service';
