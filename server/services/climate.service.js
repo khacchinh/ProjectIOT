@@ -31,6 +31,15 @@ function getAll(server) {
     return deferred.promise;
 }
 
+function getAllServerName(){
+    var deferred = Q.defer();
+    db.climates.find({}, {servre : 1}).toArray(function (err, climates) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        deferred.resolve(climates);
+    });
+    return deferred.promise;
+}
+
 function getById(_id) {
     var deferred = Q.defer();
 
