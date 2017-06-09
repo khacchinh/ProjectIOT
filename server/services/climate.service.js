@@ -31,15 +31,6 @@ function getAll(server) {
     return deferred.promise;
 }
 
-function getAllServerName(){
-    var deferred = Q.defer();
-    db.climates.find({}, {servre : 1}).toArray(function (err, climates) {
-        if (err) deferred.reject(err.name + ': ' + err.message);
-        deferred.resolve(climates);
-    });
-    return deferred.promise;
-}
-
 function getById(_id) {
     var deferred = Q.defer();
 
@@ -58,18 +49,26 @@ function getById(_id) {
     return deferred.promise;
 }
 
-function update(_server, climateParam) {
+function update(climateParam) {
     var deferred = Q.defer();
 
     // validation
-    db.climates.findOne({ server: _server },function (err, climate) {
+    db.climates.findOne({ server: climateParam.server },function (err, climate) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
         if (climate) {
-            climate[climateParam.key] = climateParam.value;
+            climate.cli_view_temp = climateParam.cli_view_temp;
+            climate.cli_view_humi = climateParam.cli_view_humi;
+            climate.cli_view_light = climateParam.cli_view_light;
+            climate.cli_view_co2 = climateParam.cli_view_co2;
+            climate.cli_stt_fan = climateParam.cli_stt_fan;
+            climate.cli_stt_cooling = climateParam.cli_stt_cooling;
+            climate.cli_stt_nozzle = climateParam.cli_stt_nozzle;
+            climate.cli_stt_shadingNet = climateParam.cli_stt_shadingNet;
+            climate.cli_stt_ventDoor = climateParam.cli_stt_ventDoor;
             updateClimate(climate);
         } else {
-            deferred.reject('Server name "' + _server + '" is not exist');
+            deferred.reject('Server name "' + climateParam.server + '" is not exist');
         }
     });
 
@@ -86,7 +85,7 @@ function update(_server, climateParam) {
                     txtClimate += arrClimate[key] + ",";
                 }
                 txtClimate += date.valueOf().toString() + "\n";
-                fs.appendFileSync(path.join(__dirname + '/data/climate/'+ _server +'.txt'), txtClimate); 
+                fs.appendFileSync(path.join(__dirname + '/data/climate/'+ arrClimate.server +'.txt'), txtClimate); 
                 var socketIO = global.socketIO;
 			    socketIO.sockets.emit('climate_update', arrClimate);
                 deferred.resolve();

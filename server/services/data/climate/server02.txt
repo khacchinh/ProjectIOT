@@ -1,0 +1,3 @@
+5936cb6f3ec0a50518264500,server02,35,50,20,20,Error,Good,Normal,Normal,Normal,1497018304927
+5936cb6f3ec0a50518264500,server02,35,50,20,20,Error,Good,Normal,Normal,Normal,1497018352470
+5936cb6f3ec0a50518264500,server02,20,50,20,20,Error,Good,Normal,Normal,Normal,1497018367165

@@ -13,9 +13,12 @@ import { UserService, ClimateService } from '../../_services/index';
 
 export class HeaderComponent implements OnInit {
     private servers : any[];
+    private username = "";
     constructor(private elementRef:ElementRef, private climateService:ClimateService){}
 
     ngOnInit() {
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.username = currentUser.firstName + " " + currentUser.lastName;
         this.climateService.getAllServerName().subscribe((servers) => {
             this.servers = servers;
         });

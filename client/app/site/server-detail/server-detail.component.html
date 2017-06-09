@@ -44,23 +44,23 @@
                                   </tr>
                                   <tr class="active">
                                     <td>FAN</td>
-                                    <td>{{arrClimate?.cli_stt_fan}}</td>
+                                    <td><span class="{{arrClimate?.cli_stt_fan}}">{{arrClimate?.cli_stt_fan}}</span> </td>
                                   </tr>
                                   <tr>
                                     <td>Cooling Pump</td>
-                                    <td>{{arrClimate?.cli_stt_cooling}}</td>
+                                    <td><span class="{{arrClimate?.cli_stt_cooling}}">{{arrClimate?.cli_stt_cooling}}</span> </td>
                                   </tr>
                                   <tr class="active">
                                     <td>Nozzle Pump</td>
-                                    <td>{{arrClimate?.cli_stt_nozzle}}</td>
+                                    <td><span class="{{arrClimate?.cli_stt_nozzle}}">{{arrClimate?.cli_stt_nozzle}}</span> </td>
                                   </tr>
                                   <tr>
                                     <td>Shading Net System</td>
-                                    <td>{{arrClimate?.cli_stt_shadingNet}}</td>
+                                    <td><span class="{{arrClimate?.cli_stt_shadingNet}}">{{arrClimate?.cli_stt_shadingNet}}</span> </td>
                                   </tr>
                                   <tr class="active">
                                     <td>Vent Door</td>
-                                    <td>{{arrClimate?.cli_stt_ventDoor}}</td>
+                                    <td><span class="{{arrClimate?.cli_stt_ventDoor}}">{{arrClimate?.cli_stt_ventDoor}}</span> </td>
                                   </tr>
                                 </tbody>
                             </table>
@@ -96,15 +96,15 @@
                                   </tr>
                                   <tr class="active">
                                     <td>Nutrition Pump</td>
-                                    <td>{{arrIrrigation?.irr_stt_nutrition}}</td>
+                                    <td><span class="{{arrIrrigation?.irr_stt_nutrition}}">{{arrIrrigation?.irr_stt_nutrition}}</span> </td>
                                   </tr>
                                   <tr>
                                     <td>Chiller Pump</td>
-                                    <td>{{arrIrrigation?.irr_stt_cliller}}</td>
+                                    <td><span class="{{arrIrrigation?.irr_stt_cliller}}">{{arrIrrigation?.irr_stt_cliller}}</span> </td>
                                   </tr>
                                   <tr class="active">
                                     <td>Alarm</td>
-                                    <td>{{arrIrrigation?.irr_alarm}}</td>
+                                    <td><span class="{{arrIrrigation?.irr_alarm}}">{{arrIrrigation?.irr_alarm}}</span> </td>
                                   </tr>
                                 </tbody>
                             </table>
@@ -121,11 +121,14 @@
                         <h4>Climate report</h4>
                         <div class="chart">
                             <chart [options]="optionsClimates" (load)="saveChartClimate($event.context)">
-                              <!--
-                                <xAxis (afterSetExtremes)="onAfterSetExtremesX($event)"></xAxis>
-                                <yAxis (afterSetExtremes)="onAfterSetExtremesY($event)"></yAxis>
-                                -->
+                              <series>
+                                  <point (select)="onPointClimatesSelect($event)"></point>
+                              </series>
                             </chart>
+                            <div>
+                              <h4>{{pointClimatesSelect?.name}} <span>{{pointClimatesSelect?.value}}</span> </h4>
+                              <p>{{pointClimatesSelect?.date}}</p>
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -134,11 +137,14 @@
                         <h4>Irrigation report</h4>
                         <div class="chart">
                             <chart [options]="optionsIrrigations" (load)="saveChartIrrigation($event.context)">
-                              <!--
-                                <xAxis (afterSetExtremes)="onAfterSetExtremesX($event)"></xAxis>
-                                <yAxis (afterSetExtremes)="onAfterSetExtremesY($event)"></yAxis>
-                                -->
+                              <series>
+                                  <point (select)="onPointIrrigationsSelect($event)"></point>
+                              </series>
                             </chart>
+                            <div>
+                              <h4>{{pointIrrigationsSelect?.name}} <span>{{pointIrrigationsSelect?.value}}</span> </h4>
+                              <p>{{pointIrrigationsSelect?.date}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

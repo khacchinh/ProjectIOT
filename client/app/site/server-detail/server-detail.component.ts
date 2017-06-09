@@ -7,6 +7,7 @@ import * as io from 'socket.io-client';
 import { AlertService, ClimateService, IrrigationService } from '../../_services/index';
 
 
+declare var series:any;
 @Component({
     moduleId: module.id,
     templateUrl: 'server-detail.component.html',
@@ -20,8 +21,10 @@ export class ServerDetailComponent implements OnInit {
     private arrIrrigation : Irrigation;
     private optionsClimates: Object;
     private optionsIrrigations: Object;
-    private chartClimate: Object;
-    private chartIrrigation: Object;
+    private chartClimate: any;
+    private chartIrrigation: any;
+    private pointClimatesSelect : any;
+    private pointIrrigationsSelect : any;
 
     constructor(
         private router: Router,
@@ -54,22 +57,26 @@ export class ServerDetailComponent implements OnInit {
                         name: "Environment Temperature",
                         animation: false,
                         type: 'line',
-                        data: data_chart.cli_view_temp
+                        data: data_chart.cli_view_temp,
+                        allowPointSelect: true
                     },{
                         name: "Environment Huminity",
                         animation: false,
                         type: 'line',
-                        data: data_chart.cli_view_humi
+                        data: data_chart.cli_view_humi,
+                        allowPointSelect: true
                     },{
                         name: "Light Intensity",
                         animation: false,
                         type: 'line',
-                        data: data_chart.cli_view_light
+                        data: data_chart.cli_view_light,
+                        allowPointSelect: true
                     },{
                         name: "CO2 Injection",
                         animation: false,
                         type: 'line',
-                        data: data_chart.cli_view_co2
+                        data: data_chart.cli_view_co2,
+                        allowPointSelect: true
                     }],
                     xAxis : {
                         type: 'datetime',
@@ -89,7 +96,8 @@ export class ServerDetailComponent implements OnInit {
                         name: "PH",
                         animation: false,
                         type: 'line',
-                        data: data_chart.irr_view_ph
+                        data: data_chart.irr_view_ph,
+                        allowPointSelect: true
                     },{
                         name: "EC",
                         animation: false,
@@ -99,12 +107,14 @@ export class ServerDetailComponent implements OnInit {
                         name: "Water Temperature",
                         animation: false,
                         type: 'line',
-                        data: data_chart.irr_view_waterTemp
+                        data: data_chart.irr_view_waterTemp,
+                        allowPointSelect: true
                     },{
                         name: "Oxygen Concentration In Water",
                         animation: false,
                         type: 'line',
-                        data: data_chart.irr_view_OxygenConc
+                        data: data_chart.irr_view_OxygenConc,
+                        allowPointSelect: true
                     }],
                     xAxis : {
                         type: 'datetime',
@@ -133,6 +143,61 @@ export class ServerDetailComponent implements OnInit {
                 this.chartIrrigation.series[3].addPoint([(new Date()).valueOf(), this.arrIrrigation.irr_view_OxygenConc]);
             }
         });
+    }
+
+    onPointClimatesSelect (e) {
+      var series_name = e.context.series.name;
+      var type = "";
+      switch (series_name){
+          case "CO2 Injection":
+            type = "ppm";
+          break;
+          
+          case "Light Intensity":
+            type = "Cd";
+          break;
+
+          case "Environment Huminity":
+            type = "%";
+          break;
+
+          case "Environment Temperature":
+            type = "&#8451;";
+          break;
+      }
+      this.pointClimatesSelect = {
+          "name" : series_name,
+          "value" : ": " +e.context.y + " " + type,
+          "date" : this.convertDate(e.context.x)
+      }
+    }
+
+    convertDate(date:any) : string{
+        return new Date(date).toLocaleString();
+    }
+
+    onPointIrrigationsSelect (e) {
+      var series_name = e.context.series.name;
+      var type = "";
+      switch (series_name){
+          case "PH":
+          case "EC":
+            type = "";
+          break;
+
+          case "Water Temperature":
+            type = "&#8451;";
+          break;
+
+          case "Oxygen Concentration In Water":
+            type = "ppm";
+          break;
+      }
+      this.pointIrrigationsSelect = {
+          "name" : series_name,
+          "value" : ": " +e.context.y + " " + type,
+          "date" : this.convertDate(e.context.x)
+      }
     }
 
     saveChartClimate(chart){

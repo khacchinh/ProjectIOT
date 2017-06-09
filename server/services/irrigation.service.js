@@ -48,18 +48,24 @@ function getById(_id) {
     return deferred.promise;
 }
 
-function update(_server, irrigationParam) {
+function update(irrigationParam) {
     var deferred = Q.defer();
 
     // validation
-    db.irrigations.findOne({ server: _server },function (err, irrigation) {
+    db.irrigations.findOne({ server: irrigationParam.server },function (err, irrigation) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
         if (irrigation) {
-            irrigation[irrigationParam.key] = irrigationParam.value;
+            irrigation.irr_view_ph = irrigationParam.irr_view_ph;
+            irrigation.irr_view_ec = irrigationParam.irr_view_ec;
+            irrigation.irr_view_waterTemp = irrigationParam.irr_view_waterTemp;
+            irrigation.irr_view_OxygenConc = irrigationParam.irr_view_OxygenConc;
+            irrigation.irr_stt_nutrition = irrigationParam.irr_stt_nutrition;
+            irrigation.irr_stt_cliller = irrigationParam.irr_stt_cliller;
+            irrigation.irr_alarm = irrigationParam.irr_alarm;
             updateIrrigation(irrigation);
         } else {
-            deferred.reject('Server name "' + _server + '" is not exist');
+            deferred.reject('Server name "' + irrigationParam.server + '" is not exist');
         }
     });
 
@@ -76,7 +82,7 @@ function update(_server, irrigationParam) {
                     txtIrrigation += arrIrrigation[key] + ",";
                 }
                 txtIrrigation += date.valueOf() + "\n";
-                fs.appendFileSync(path.join(__dirname + '/data/irrigation/'+ _server +'.txt'), txtIrrigation); 
+                fs.appendFileSync(path.join(__dirname + '/data/irrigation/'+ arrIrrigation.server +'.txt'), txtIrrigation); 
                 var socketIO = global.socketIO;
 			    socketIO.sockets.emit('irrigation_update', arrIrrigation);
                 deferred.resolve();

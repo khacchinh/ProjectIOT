@@ -1,3 +1,7 @@
-body{
-    background: #32C2CD url(../img/bg-img.jpg) !important;
+
+
+span.username {
+    color: aqua;
+    font-size: 21px;
+    margin-top: 10px;
 }

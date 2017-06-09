@@ -41,11 +41,23 @@ function getCurrent(req, res) {
 function update(req, res) {
     var data = req.params._data;
     var arr_data = data.split("-");
+    // var climateData = {
+    //     "key" : arr_data[1],
+    //     "value" : (!isNaN(arr_data[2])) ? parseFloat(arr_data[2]) : arr_data[2]
+    // }
     var climateData = {
-        "key" : arr_data[1],
-        "value" : (!isNaN(arr_data[2])) ? parseFloat(arr_data[2]) : arr_data[2]
+        "server": arr_data[0],
+        "cli_view_temp" : arr_data[1],
+        "cli_view_humi" : arr_data[2],
+        "cli_view_light" : arr_data[3],
+        "cli_view_co2" : arr_data[4],
+        "cli_stt_fan" : arr_data[5],
+        "cli_stt_cooling" : arr_data[6],
+        "cli_stt_nozzle" : arr_data[7],
+        "cli_stt_shadingNet" : arr_data[8],
+        "cli_stt_ventDoor" : arr_data[9],
     }
-    climateServices.update(arr_data[0], climateData)
+    climateServices.update(climateData)
         .then(function () {
             res.sendStatus(200);
         })

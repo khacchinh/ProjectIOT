@@ -40,11 +40,21 @@ function getCurrent(req, res) {
 function update(req, res) {
     var data = req.params._data;
     var arr_data = data.split("-");
+    // var irrigationData = {
+    //     "key" : arr_data[1],
+    //     "value" : (!isNaN(arr_data[2])) ? parseFloat(arr_data[2]) : arr_data[2]
+    // }
     var irrigationData = {
-        "key" : arr_data[1],
-        "value" : (!isNaN(arr_data[2])) ? parseFloat(arr_data[2]) : arr_data[2]
+        "server": arr_data[0],
+        "irr_view_ph" : arr_data[1],
+        "irr_view_ec" : arr_data[2],
+        "irr_view_waterTemp" : arr_data[3],
+        "irr_view_OxygenConc" : arr_data[4],
+        "irr_stt_nutrition" : arr_data[5],
+        "irr_stt_cliller" : arr_data[6],
+        "irr_alarm" : arr_data[7],
     }
-    irrigationServices.update(arr_data[0], irrigationData)
+    irrigationServices.update(irrigationData)
         .then(function () {
             res.sendStatus(200);
         })
