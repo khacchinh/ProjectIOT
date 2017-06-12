@@ -20,6 +20,18 @@ export class IrrigationService {
         return this.http.get(this.config.apiUrl + '/irrigations/data_charts/' + server, this.jwt()).map((response: Response) => response.json());
     }
 
+    update(old_server: string, server: any) {
+        return this.http.put(this.config.apiUrl + '/irrigations/' + old_server, server, this.jwt());
+    }
+
+    create(server: any) {
+        return this.http.post(this.config.apiUrl + '/irrigations/create', server, this.jwt());
+    }
+
+    delete(server: string) {
+        return this.http.delete(this.config.apiUrl + '/irrigations/' + server, this.jwt());
+    }
+
     // private helper methods
 
     private jwt() {

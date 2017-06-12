@@ -1,0 +1,9 @@
+5936cb603ec0a505182644ff,server01,35,30,25,30,Good,Bad,Normal,Normal,Error,1496854323826
+5936cb603ec0a505182644ff,server01,40,30,25,30,Good,Bad,Normal,Normal,Error,1496854349625
+5936cb603ec0a505182644ff,server01,40,20,25,30,Good,Bad,Normal,Normal,Error,1496854397534
+5936cb603ec0a505182644ff,server01,40,20,25,40,Good,Bad,Normal,Normal,Error,1496854419953
+5936cb603ec0a505182644ff,server01,40,20,33,40,Good,Bad,Normal,Normal,Error,1496854441245
+5936cb603ec0a505182644ff,server01,45,20,33,40,Good,Bad,Normal,Normal,Error,1497017943162
+5936cb603ec0a505182644ff,server01,20,20,33,40,Good,Bad,Normal,Normal,Error,1497017961706
+5936cb603ec0a505182644ff,server01,35,20,33,40,Good,Bad,Normal,Normal,Error,1497017971371
+5936cb603ec0a505182644ff,server01,40,60,20,50,Good,Good,Good,Good,Good,1497025101120

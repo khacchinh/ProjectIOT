@@ -9,6 +9,9 @@ router.get('/current/:_id', getCurrent);
 router.get('/servers', getAllServerName);
 router.get('/push/:_data', update);
 router.get('/data_charts/:server', getDataClimateChart);
+router.post('/create', addServer);
+router.delete('/:server', _delete);
+router.put('/:server', updateServer);
 
 module.exports = router;
 
@@ -82,6 +85,36 @@ function getDataClimateChart(req, res){
             res.send(datas)
         })
         .catch(function(err){
+            res.status(400).send(err);
+        });
+}
+
+function addServer(req, res) {
+    climateServices.create(req.body)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function _delete(req, res) {
+    climateServices.delete(req.params.server)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function updateServer(req, res) {
+    climateServices.updateServer(req.params.server, req.body)
+        .then(function (climate) {
+            res.send(climate);
+        })
+        .catch(function (err) {
             res.status(400).send(err);
         });
 }

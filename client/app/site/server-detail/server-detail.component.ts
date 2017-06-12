@@ -47,6 +47,7 @@ export class ServerDetailComponent implements OnInit {
             });
 
             this.climateService.getDataClimateChart(server).subscribe(data_chart=>{
+                console.log(data_chart);
                 //add chart
                 this.optionsClimates = {
                     chart: {
@@ -128,19 +129,19 @@ export class ServerDetailComponent implements OnInit {
         this.socket.on('climate_update', (data:any) => {
             if (this.arrClimate.server === data.server){
                 this.arrClimate = data;
-                this.chartClimate.series[0].addPoint([(new Date()).valueOf(), this.arrClimate.cli_view_temp]);
-                this.chartClimate.series[1].addPoint([(new Date()).valueOf(), this.arrClimate.cli_view_humi]);
-                this.chartClimate.series[2].addPoint([(new Date()).valueOf(), this.arrClimate.cli_view_light]);
-                this.chartClimate.series[3].addPoint([(new Date()).valueOf(), this.arrClimate.cli_view_co2]);
+                this.chartClimate.series[0].addPoint([(new Date()).valueOf(), parseFloat(this.arrClimate.cli_view_temp.toString())]);
+                this.chartClimate.series[1].addPoint([(new Date()).valueOf(), parseFloat(this.arrClimate.cli_view_humi.toString())]);
+                this.chartClimate.series[2].addPoint([(new Date()).valueOf(), parseFloat(this.arrClimate.cli_view_light.toString())]);
+                this.chartClimate.series[3].addPoint([(new Date()).valueOf(), parseFloat(this.arrClimate.cli_view_co2.toString())]);
             }
         });
         this.socket.on('irrigation_update', (data:any) => {
             if (this.arrIrrigation.server === data.server){
                 this.arrIrrigation = data;
-                this.chartIrrigation.series[0].addPoint([(new Date()).valueOf(), this.arrIrrigation.irr_view_ph]);
-                this.chartIrrigation.series[1].addPoint([(new Date()).valueOf(), this.arrIrrigation.irr_view_ec]);
-                this.chartIrrigation.series[2].addPoint([(new Date()).valueOf(), this.arrIrrigation.irr_view_waterTemp]);
-                this.chartIrrigation.series[3].addPoint([(new Date()).valueOf(), this.arrIrrigation.irr_view_OxygenConc]);
+                this.chartIrrigation.series[0].addPoint([(new Date()).valueOf(), parseFloat(this.arrIrrigation.irr_view_ph.toString())]);
+                this.chartIrrigation.series[1].addPoint([(new Date()).valueOf(), parseFloat(this.arrIrrigation.irr_view_ec.toString())]);
+                this.chartIrrigation.series[2].addPoint([(new Date()).valueOf(), parseFloat(this.arrIrrigation.irr_view_waterTemp.toString())]);
+                this.chartIrrigation.series[3].addPoint([(new Date()).valueOf(), parseFloat(this.arrIrrigation.irr_view_OxygenConc.toString())]);
             }
         });
     }

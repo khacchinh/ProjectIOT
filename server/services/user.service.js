@@ -4,7 +4,7 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var Q = require('q');
 var mongo = require('mongoskin');
-var db = mongo.db(config.connectionString, { native_parser: true });
+var db = mongo.db(config.connectionString, { native_parser: false });
 db.bind('users');
 
 var service = {};
@@ -21,6 +21,7 @@ module.exports = service;
 function authenticate(username, password) {
     var deferred = Q.defer();
     db.users.findOne({ username: username }, function (err, user) {
+        console.log(user);
         if (err) deferred.reject(err.name + ': ' + err.message);
 
         if (user && bcrypt.compareSync(password, user.hash)) {
@@ -155,7 +156,6 @@ function update(_id, userParam) {
             { $set: set },
             function (err, doc) {
                 if (err) deferred.reject(err.name + ': ' + err.message);
-
                 deferred.resolve();
             });
     }

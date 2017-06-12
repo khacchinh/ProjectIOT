@@ -14,9 +14,10 @@ var service = {};
 service.getAll = getAll;
 service.getById = getById;
 service.getDataIrrigationChart = getDataIrrigationChart;
-//service.create = create;
+service.create = create;
 service.update = update;
-//service.delete = _delete;
+service.delete = _delete;
+service.updateServer = updateServer;
 
 module.exports = service;
 
@@ -128,12 +129,12 @@ function dataTemp(date, value){
     data_temp.push(parseFloat(value));
     return data_temp;
 }
-/*
-function _delete(_id) {
+
+function _delete(server) {
     var deferred = Q.defer();
 
     db.irrigations.remove(
-        { _id: mongo.helper.toObjectID(_id) },
+        { server: server },
         function (err) {
             if (err) deferred.reject(err.name + ': ' + err.message);
 
@@ -148,28 +149,58 @@ function create(irrigationParam) {
 
     // validation
     db.irrigations.findOne(
-        { servername: irrigationParam.servername },
+        { server: irrigationParam.server },
         function (err, irrigation) {
             if (err) deferred.reject(err.name + ': ' + err.message);
 
-            if (user) {
-                // username already exists
-                deferred.reject('Server name "' + irrigationParam.servername + '" is already taken');
+            if (irrigation) {
+                deferred.reject('Server name "' + irrigationParam.server + '" is already taken');
             } else {
                 createIrrigation();
             }
         });
 
     function createIrrigation() {
+        var irrigation = {
+            "server": irrigationParam.server
+        }
         db.irrigations.insert(
             irrigation,
             function (err, doc) {
                 if (err) deferred.reject(err.name + ': ' + err.message);
-
+                fs.appendFileSync(path.join(__dirname + '/data/irrigation/'+ irrigationParam.server +'.txt'), ''); 
                 deferred.resolve();
             });
     }
 
     return deferred.promise;
 }
-*/
+
+function updateServer(server, irrigationParam) {
+    var deferred = Q.defer();
+
+    // validation
+    db.irrigations.findOne({ server: server },function (err, irrigation) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+
+        if (irrigation) {
+            irrigation.server = irrigationParam.server;
+            updateIrrigation(irrigation);
+        } else {
+            deferred.reject('Server name "' + irrigationParam.server + '" is not exist');
+        }
+    });
+
+    function updateIrrigation(irrigationParam) {
+        // fields to update
+        db.irrigations.update(
+            { _id: mongo.helper.toObjectID(irrigationParam._id) },
+            { $set: irrigationParam },
+            function (err, doc) {
+                if (err) deferred.reject(err.name + ': ' + err.message);
+                fs.renameSync(path.join(__dirname + '/data/irrigation/'+ server +'.txt'), path.join(__dirname + '/data/irrigation/'+ irrigationParam.server +'.txt'))
+                deferred.resolve();
+        });
+    }
+    return deferred.promise;
+}

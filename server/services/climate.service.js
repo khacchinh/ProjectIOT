@@ -14,10 +14,11 @@ var service = {};
 service.getAll = getAll;
 service.getById = getById;
 service.getDataClimateChart = getDataClimateChart;
-//service.create = create;
+service.create = create;
 service.update = update;
 service.getAllServerName  = getAllServerName;
-//service.delete = _delete;
+service.delete = _delete;
+service.updateServer = updateServer;
 
 module.exports = service;
 
@@ -37,7 +38,7 @@ function getById(_id) {
     db.climates.findById(_id, function (err, climate) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
-        if (user) {
+        if (climate) {
             // return user (without hashed password)
             deferred.resolve(climate);
         } else {
@@ -139,12 +140,12 @@ function dataTemp(date, value){
     data_temp.push(parseFloat(value));
     return data_temp;
 }
-/*
-function _delete(_id) {
+
+function _delete(server) {
     var deferred = Q.defer();
 
     db.climates.remove(
-        { _id: mongo.helper.toObjectID(_id) },
+        { server: server },
         function (err) {
             if (err) deferred.reject(err.name + ': ' + err.message);
 
@@ -159,28 +160,58 @@ function create(climateParam) {
 
     // validation
     db.climates.findOne(
-        { servername: climateParam.servername },
+        { server: climateParam.server },
         function (err, climate) {
             if (err) deferred.reject(err.name + ': ' + err.message);
 
-            if (user) {
-                // username already exists
-                deferred.reject('Server name "' + climateParam.servername + '" is already taken');
+            if (climate) {
+                deferred.reject('Server name "' + climateParam.server + '" is already taken');
             } else {
                 createClimate();
             }
         });
 
     function createClimate() {
+        var climate = {
+            "server":climateParam.server
+        }
         db.climates.insert(
             climate,
             function (err, doc) {
                 if (err) deferred.reject(err.name + ': ' + err.message);
-
+                fs.appendFileSync(path.join(__dirname + '/data/climate/'+ climateParam.server +'.txt'), ''); 
                 deferred.resolve();
             });
     }
-
     return deferred.promise;
 }
-*/
+
+
+function updateServer(server, climateParam) {
+    var deferred = Q.defer();
+
+    // validation
+    db.climates.findOne({ server: server },function (err, climate) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+
+        if (climate) {
+            climate.server = climateParam.server;
+            updateClimate(climate);
+        } else {
+            deferred.reject('Server name "' + climateParam.server + '" is not exist');
+        }
+    });
+
+    function updateClimate(arrClimate) {
+        // fields to update
+        db.climates.update(
+            { _id: mongo.helper.toObjectID(arrClimate._id) },
+            { $set: arrClimate },
+            function (err, doc) {
+                if (err) deferred.reject(err.name + ': ' + err.message);
+                fs.renameSync(path.join(__dirname + '/data/climate/'+ server +'.txt'), path.join(__dirname + '/data/climate/'+ climateParam.server +'.txt'))
+                deferred.resolve();
+        });
+    }
+    return deferred.promise;
+}

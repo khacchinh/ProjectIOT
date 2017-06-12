@@ -8,6 +8,9 @@ router.get('/server_name/:server', getAll);
 router.get('/current/:_id', getCurrent);
 router.get('/push/:_data', update);
 router.get('/data_charts/:server', getDataIrrigationChart);
+router.post('/create', addServer);
+router.delete('/:server', _delete);
+router.put('/:server', updateServer);
 
 module.exports = router;
 
@@ -69,6 +72,36 @@ function getDataIrrigationChart(req, res){
             res.send(datas)
         })
         .catch(function(err){
+            res.status(400).send(err);
+        });
+}
+
+function addServer(req, res) {
+    irrigationServices.create(req.body)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function _delete(req, res) {
+    irrigationServices.delete(req.params.server)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+function updateServer(req, res) {
+    irrigationServices.updateServer(req.params.server, req.body)
+        .then(function (irrigation) {
+            res.send(irrigation);
+        })
+        .catch(function (err) {
             res.status(400).send(err);
         });
 }

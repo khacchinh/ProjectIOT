@@ -6,6 +6,8 @@ import { UserComponent, RegisterComponent, UserEditComponent } from './users/ind
 import { HomeComponent } from './home/index';
 import { ServerDetailComponent } from './server-detail/index';
 
+import { ServerComponent, ServerAddComponent, ServerEditComponent} from './server-manager/index';
+
 //import { RegisterComponent } from './register/register.component';
 import { AuthGuard }       from '../_guards/index';
 
@@ -21,6 +23,9 @@ const siteRoutes: Routes = [
       { path: 'user/:id', component: UserEditComponent},
       { path: 'user-add', component: RegisterComponent},
       { path: 'server-detail/:server', component: ServerDetailComponent},
+      { path: 'servers', component: ServerComponent },
+      { path: 'server/:id', component: ServerEditComponent},
+      { path: 'server-add', component: ServerAddComponent},
     ]
   }
 ];

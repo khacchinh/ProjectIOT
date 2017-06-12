@@ -24,6 +24,18 @@ export class ClimateService {
         return this.http.get(this.config.apiUrl + '/climates/data_charts/' + server, this.jwt()).map((response: Response) => response.json());
     }
 
+    delete(server: string) {
+        return this.http.delete(this.config.apiUrl + '/climates/' + server, this.jwt());
+    }
+
+    update(old_server: string, server: any) {
+        return this.http.put(this.config.apiUrl + '/climates/' + old_server, server, this.jwt());
+    }
+
+    create(server: any) {
+        return this.http.post(this.config.apiUrl + '/climates/create', server, this.jwt());
+    }
+
     // private helper methods
 
     private jwt() {

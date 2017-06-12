@@ -1,5 +1,5 @@
 ﻿{
-    "connectionString": "mongodb://localhost:27017/iot_db",
+    "connectionString": "mongodb://chinhhuynh:concacanh123@ds119682.mlab.com:19682/heroku_2p5w1srl",
     "apiUrl": "http://localhost:4000",
     "secret": "vegetable"
 }

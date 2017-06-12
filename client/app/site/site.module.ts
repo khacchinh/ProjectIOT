@@ -20,6 +20,7 @@ import { SiteRoutingModule } from './site.routing';
 
 //user
 import { UserComponent, RegisterComponent, UserEditComponent } from './users/index';
+import { ServerComponent, ServerAddComponent, ServerEditComponent} from './server-manager/index';
 
 @NgModule({
   imports: [
@@ -38,7 +39,10 @@ import { UserComponent, RegisterComponent, UserEditComponent } from './users/ind
     RegisterComponent,
     UserEditComponent,
     SiteAlertComponent,
-    ServerDetailComponent
+    ServerDetailComponent,
+    ServerComponent,
+    ServerAddComponent,
+    ServerEditComponent
   ],
   providers: [
     AlertService,
