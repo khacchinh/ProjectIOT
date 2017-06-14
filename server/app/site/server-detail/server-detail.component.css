@@ -1,0 +1,40 @@
+.row.title_text {
+    text-align: center;
+}
+
+.row.title_text span{
+    font-size: 32px;
+    font-weight: 500;
+}
+
+chart{
+    display: block;
+}
+
+.Good{
+    background-color: #a9eebc;
+    padding: 5px;
+    color: #0d6215;
+    /* width: 109px ! important; */
+    padding-right: 18px;
+}
+
+.Normal{
+    background-color: #ffe4b2;
+    padding: 5px;
+    color: #b4460d;
+}
+
+.Bad{
+    background-color: #feadad;
+    padding: 5px;
+    color: #c91111;
+    padding-right: 28px;
+}
+
+.Error{
+    background-color: #8d8989;
+    padding: 5px;
+    color: white;
+    padding-right: 20px;
+}

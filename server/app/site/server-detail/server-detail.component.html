@@ -1,0 +1,154 @@
+﻿        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">{{arrClimate?.server}} detail</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <!-- /.row -->
+            <div class="row">
+
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-12">
+               
+                    <div class="panel panel-default">
+
+                        <div class="col-md-6">
+                            <br>
+                            <div class="row title_text"><span>Climate Control</span></div>
+                            <br>
+                            <table class="table table-bordered">
+                                <thead>
+                                  <tr class="info">
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="active">
+                                    <td>Environment Temperature</td>
+                                    <td>{{arrClimate?.cli_view_temp}} &#8451;</td>
+                                  </tr>
+                                  <tr >
+                                    <td>Environment Huminity</td>
+                                    <td>{{arrClimate?.cli_view_humi}} %</td>
+                                  </tr>
+                                  <tr class="active">
+                                    <td>Light Intensity</td>
+                                    <td>{{arrClimate?.cli_view_light}} Cd</td>
+                                  </tr>
+                                  <tr >
+                                    <td>CO2 Injection</td>
+                                    <td>{{arrClimate?.cli_view_co2}} ppm</td>
+                                  </tr>
+                                  <tr class="active">
+                                    <td>FAN</td>
+                                    <td><span class="{{arrClimate?.cli_stt_fan}}">{{arrClimate?.cli_stt_fan}}</span> </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Cooling Pump</td>
+                                    <td><span class="{{arrClimate?.cli_stt_cooling}}">{{arrClimate?.cli_stt_cooling}}</span> </td>
+                                  </tr>
+                                  <tr class="active">
+                                    <td>Nozzle Pump</td>
+                                    <td><span class="{{arrClimate?.cli_stt_nozzle}}">{{arrClimate?.cli_stt_nozzle}}</span> </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Shading Net System</td>
+                                    <td><span class="{{arrClimate?.cli_stt_shadingNet}}">{{arrClimate?.cli_stt_shadingNet}}</span> </td>
+                                  </tr>
+                                  <tr class="active">
+                                    <td>Vent Door</td>
+                                    <td><span class="{{arrClimate?.cli_stt_ventDoor}}">{{arrClimate?.cli_stt_ventDoor}}</span> </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col-md-6-->
+                        <div class="col-md-6">
+                            <br>
+                            <div class="row title_text"><span>Irrigation Control</span></div>
+                            <br>
+                            <table class="table table-bordered">
+                                <thead>
+                                  <tr class="info">
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="active">
+                                    <td>PH</td>
+                                    <td>{{arrIrrigation?.irr_view_ph}}</td>
+                                  </tr>
+                                  <tr >
+                                    <td>EC</td>
+                                    <td>{{arrIrrigation?.irr_view_ec}}</td>
+                                  </tr>
+                                  <tr class="active">
+                                    <td>Water Temperature</td>
+                                    <td>{{arrIrrigation?.irr_view_waterTemp}}  &#8451;</td>
+                                  </tr>
+                                  <tr >
+                                    <td>Oxygen Concentration In Water</td>
+                                    <td>{{arrIrrigation?.irr_view_OxygenConc}} ppm</td>
+                                  </tr>
+                                  <tr class="active">
+                                    <td>Nutrition Pump</td>
+                                    <td><span class="{{arrIrrigation?.irr_stt_nutrition}}">{{arrIrrigation?.irr_stt_nutrition}}</span> </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Chiller Pump</td>
+                                    <td><span class="{{arrIrrigation?.irr_stt_cliller}}">{{arrIrrigation?.irr_stt_cliller}}</span> </td>
+                                  </tr>
+                                  <tr class="active">
+                                    <td>Alarm</td>
+                                    <td><span class="{{arrIrrigation?.irr_alarm}}">{{arrIrrigation?.irr_alarm}}</span> </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col-md-6-->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-12">
+                    <div class="row">
+                        <h4>Climate report</h4>
+                        <div class="chart">
+                            <chart [options]="optionsClimates" (load)="saveChartClimate($event.context)">
+                              <series>
+                                  <point (select)="onPointClimatesSelect($event)"></point>
+                              </series>
+                            </chart>
+                            <div>
+                              <h4>{{pointClimatesSelect?.name}} <span>{{pointClimatesSelect?.value}}</span> </h4>
+                              <p>{{pointClimatesSelect?.date}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <h4>Irrigation report</h4>
+                        <div class="chart">
+                            <chart [options]="optionsIrrigations" (load)="saveChartIrrigation($event.context)">
+                              <series>
+                                  <point (select)="onPointIrrigationsSelect($event)"></point>
+                              </series>
+                            </chart>
+                            <div>
+                              <h4>{{pointIrrigationsSelect?.name}} <span>{{pointIrrigationsSelect?.value}}</span> </h4>
+                              <p>{{pointIrrigationsSelect?.date}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
